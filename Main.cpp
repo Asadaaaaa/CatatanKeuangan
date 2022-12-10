@@ -29,6 +29,11 @@ struct Account {
   string username = "SMARPL", password = "1234";
 };
 
+// Struct for name of month
+struct Month {
+  string name[12] = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+};
+
 // Struct for financialData financial
 struct FinancialData {
   string type[99999] = {};
@@ -43,6 +48,7 @@ struct FinancialData {
 
 // Declare a Structs
 UI ui;
+Month month;
 FinancialData financialData;
 
 //////////////////////////////////////////////
@@ -281,18 +287,44 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
       return;
     }
 
-    if(intInput <= 7) {
-      if(intInput % 2 == 0) {
-        if(intInput < 1 || intInput > 30) {
-          notificator("Bulan " + bulan + " Memiliki 30 Hari", 38, 50);
+    if(intInput < 1) {
+      notificator("Hari harus lebih besar dari 0", 38, 50);
+
+      Add_History_Transaction_Page(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
+
+      return;
+    }
+
+    if(stoi(bulan) == 2) {
+      if(stoi(tahun) % 4 == 0) {
+        if(intInput > 29) {
+          notificator("Bulan " + month.name[stoi(bulan)-1] + " Memiliki 29 Hari (Kabisat)", 48, 50);
 
           Add_History_Transaction_Page(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
 
           return;
         }
       } else {
-        if(intInput < 1 || intInput > 31) {
-          notificator("Bulan " + bulan + " Memiliki 31 Hari", 38, 50);
+        if(intInput > 28) {
+          notificator("Bulan " + month.name[stoi(bulan)-1] + " Memiliki 28 Hari (Bukan Kabisat)", 48, 50);
+
+          Add_History_Transaction_Page(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
+
+          return;
+        }
+      }
+    } else if(stoi(bulan) <= 7) {
+      if(stoi(bulan) % 2 == 0) {
+        if(intInput > 30) {
+          notificator("Bulan " + month.name[stoi(bulan)-1] + " Memiliki 30 Hari", 38, 50);
+
+          Add_History_Transaction_Page(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
+
+          return;
+        }
+      } else {
+        if(intInput > 31) {
+          notificator("Bulan " + month.name[stoi(bulan)-1] + " Memiliki 31 Hari", 38, 50);
 
           Add_History_Transaction_Page(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
 
@@ -300,8 +332,8 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
         }
       }
     } else {
-      if(intInput % 2 == 0) {
-        if(intInput < 1 || intInput > 31) {
+      if(stoi(bulan) % 2 == 0) {
+        if(intInput > 31) {
           notificator("Bulan " + bulan + " Memiliki 31 Hari", 38, 50);
 
           Add_History_Transaction_Page(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
@@ -309,7 +341,7 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
           return;
         }
       } else {
-        if(intInput < 1 || intInput > 30) {
+        if(intInput > 30) {
           notificator("Bulan " + bulan + " Memiliki 30 Hari", 38, 50);
 
           Add_History_Transaction_Page(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);

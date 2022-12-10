@@ -38,3 +38,51 @@
   Amount: 500000
   Desc: bayar lonte
 }
+{
+  Type: Pemasukan
+  Year: 2025
+  Month: 8
+  Day: 30
+  Amount: 200000
+  Desc: ayam apage
+}
+{
+  Type: Pemasukan
+  Year: 2024
+  Month: 2
+  Day: 29
+  Amount: 10000
+  Desc: helm
+}
+{
+  Type: Pengeluaran
+  Year: 2028
+  Month: 2
+  Day: 3
+  Amount: 9000
+  Desc: parkir
+}
+{
+  Type: Pengeluaran
+  Year: 2023
+  Month: 3
+  Day: 30
+  Amount: 20000
+  Desc: asbak
+}
+{
+  Type: Pemasukan
+  Year: 2023
+  Month: 2
+  Day: 10
+  Amount: 80000
+  Desc: bubur super dede
+}
+{
+  Type: Pemasukan
+  Year: 2023
+  Month: 5
+  Day: 4
+  Amount: 40000
+  Desc: kangkung sayur
+}
