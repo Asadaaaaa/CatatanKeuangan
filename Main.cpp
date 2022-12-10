@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -82,7 +83,7 @@ void Initial_Income_Page() {
       }
     }
   }
-  sort(year, year + (sizeof(year) / sizeof(year)));
+  sort(year, year + counter);
 
   // Layouts
   system("cls");
@@ -164,6 +165,18 @@ void History_Transaction_Page() {
   }
   
   
+}
+
+void Average_Spent_Per_Day() {
+  // for(int i = 0; i < financialData.counter; i++) {
+  //   if(financialData.type[i] == "Pengeluaran") {
+  //     for(int j = 1; j <= 31; j++) {
+  //       if(financialData.day[i] == j) {
+
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 void Financial_Notes_Page() {

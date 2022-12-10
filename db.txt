@@ -8,7 +8,7 @@
 }
 {
   Type: Pemasukan
-  Year: 2022
+  Year: 2024
   Month: 3
   Day: 25
   Amount: 3500000
@@ -24,7 +24,7 @@
 }
 {
   Type: Pengeluaran
-  Year: 2022
+  Year: 2028
   Month: 3
   Day: 25
   Amount: 300000
@@ -32,7 +32,7 @@
 }
 {
   Type: Pengeluaran
-  Year: 2022
+  Year: 2023
   Month: 3
   Day: 25
   Amount: 500000
@@ -80,7 +80,7 @@
 }
 {
   Type: Pemasukan
-  Year: 2023
+  Year: 2024
   Month: 5
   Day: 4
   Amount: 40000
