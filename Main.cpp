@@ -61,6 +61,7 @@ FinancialData financialData;
 void Initial_Income_Page() {
   // Variables
   string input;
+  bool empty = true;
   int counter = 0;
   int year[99999] = {};
 
@@ -103,12 +104,14 @@ void Initial_Income_Page() {
       }
       if(total != 0) {
         cout << " -> Modal pada bulan ke-" << j << " Tahun " << year[i] << ": " << total << endl;
-      } else {
-        cout << " Data transaksi tidak ada!" << endl;
-        j = 12;
-        i = counter;
+        if(empty == true) {
+          empty = false;
+        }
       }
     }
+  }
+  if(empty == true) {
+    cout << " Data transaksi tidak ada!" << endl;
   }
   cout << endl << " [0] Kembali" << endl;
   cout << ui.border << endl;
