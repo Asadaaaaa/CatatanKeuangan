@@ -1,2 +1,4 @@
 *.exe
 .vscode/settings.json
+Main.zip
+Main.o

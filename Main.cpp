@@ -6,9 +6,11 @@ using namespace std;
 /************ Prototype Function ************/
 
 // Prototype Function
+void Financial_Notes_Page();
+void Main_Page();
 void loader();
 void notificator(string text, int borderLen, int parentLen);
-void Main_Page();
+void Add_Notes(string jenis_riwayat, string tahun, string bulan, string hari, string nominal, string keterangan);
 
 //////////////////////////////////////////////
 
@@ -34,6 +36,7 @@ struct Data {
   int day[99999] = {};
   int amount[99999] = {};
   string desc[99999] = {};
+  int balance = 0;
   int counter = 0;
 };
 
@@ -47,15 +50,71 @@ Data data;
 
 /**************** SMARPL Page ****************/
 
-void History_Transaction() {
+void Initial_Income_Page() {
   // Variables
   string input;
+
+  // Layouts
+  cout << ui.border << endl;
+  cout << "               Modal Awal" << endl;
+  cout << " Modal Awal kamu: " << data.amount[0] << endl;
+  cout << ui.border << endl;
+  cout << "Ketik \"0\" untuk kembali" << endl;
+
+  // Input
+  getline(cin, input);
+  if(input ==  "0") {
+    Financial_Notes_Page();
+
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Initial_Income_Page();
+
+    return;
+  }
+}
+
+void History_Transaction_Page() {
+  // Variables
+  string input;
+  int counter = 0;
 
   // Layouts
   system("cls");
   cout << ui.border << endl;
   cout << "             Riwayat Transaksi" << endl;
   cout << ui.border << endl;
+  if(data.counter == 0) {
+    cout << endl << " Data transaksi tidak ada!" << endl << endl;
+  }
+  for(int i = (data.counter - 1); i >= 0; i--) {
+    counter++;
+    cout << " [" << (i + 1) << "] " << data.type[i] << endl;
+    cout << "     Tanggal:  " << data.year[i] << "/" << data.month[i] << "/" << data.day[i] << endl;
+    cout << "     Jumlah: " << data.amount[i] << endl;
+    cout << "     Keterangan: " << data.desc[i] << endl << endl;
+
+    if(counter == 10) break;
+  }
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input == "0") {
+    Financial_Notes_Page();
+
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+    History_Transaction_Page();
+
+    return;
+  }
+  
   
 }
 
@@ -66,19 +125,19 @@ void Financial_Notes_Page() {
   // Layouts
   system("cls");
   cout << ui.border << endl;
-  cout << "             Menu Catatan Keuangan" << endl;
+  cout << "             Menu Catatan Keuangan" << endl << endl;
+  cout << " Uang kamu: " << data.balance << endl;
   cout << ui.border << endl;
   cout << " [1] Rata-rata pengeluaran per hari" << endl;
   cout << " [2] Rata-rata pengeluaran per minggu" << endl;
   cout << " [3] Rata-rata pengeluaran per bulan" << endl;
   cout << " [4] Riwayat transaksi" << endl;
   cout << " [5] Modal awal" << endl;
-  cout << " [6] Sisal uang" << endl;
   cout << " [0] Kembali" << endl;
   cout << ui.border << endl;
   
   // Inputs
-  cout << "> Pilih menu: " << endl;
+  cout << "> Pilih menu: ";
   getline(cin, input);
 
   if(input == "1") {
@@ -91,15 +150,15 @@ void Financial_Notes_Page() {
 
     return;
   } else if(input == "4") {
-
+    History_Transaction_Page();
+    
     return;
   } else if(input == "5") {
-
-    return;
-  } else if(input == "6") {
-
+    Initial_Income_Page();
+    
     return;
   } else if(input == "0") {
+    Main_Page();
 
     return;
   }
@@ -114,7 +173,8 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
   // Layouts
   system("cls");
   cout << ui.border << endl;
-  cout << "            Tambah Riwayat " << jenis_riwayat << endl;
+  cout << "            Tambah Riwayat " << jenis_riwayat << endl << endl;
+  cout << " Uang kamu: " << data.balance << endl;
   cout << ui.border << endl;
   cout << " Tahun      : " << tahun << endl; 
   cout << " Bulan      : " << bulan << endl; 
@@ -248,6 +308,11 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
 
     return;
   } else {
+    if(jenis_riwayat == "Pemasukan") {
+      data.balance += stoi(nominal);
+    } else if(jenis_riwayat == "Pengeluaran") {
+      data.balance -= stoi(nominal);
+    }
     Add_Notes(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
     notificator("Riwayat Berhasil Ditambahkan", 38, 50);
 
@@ -264,7 +329,8 @@ void Choose_History_Transaction_Type_Page() {
   // Layouts
   system("cls");
   cout << ui.border << endl;
-  cout << "             Tambah Catatan Keuangan" << endl;
+  cout << "             Tambah Catatan Keuangan" << endl << endl;
+  cout << " Uang kamu: " << data.balance << endl;
   cout << ui.border << endl;
   cout << " [1] Tambah Riwayat Pemasukan" << endl;
   cout << " [2] Tambah Riwayat Pengeluaran" << endl;
@@ -299,7 +365,8 @@ void Main_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             SELAMAT DATANG DI SMARPL" << endl;
-  cout << "            (SISTEM MONETER ANAK RPL)" << endl;
+  cout << "            (SISTEM MONETER ANAK RPL)" << endl << endl;
+  cout << " Uang kamu: " << data.balance << endl;
   cout << ui.border << endl;
   cout << " [1] Tampilkan catatan keuangan" << endl;
   cout << " [2] Tambah catatan keuangan" << endl;
@@ -313,6 +380,7 @@ void Main_Page() {
   getline(cin, input);
 
   if(input == "1") {
+    Financial_Notes_Page();
 
     return;
   } else if(input == "2") {
@@ -320,10 +388,10 @@ void Main_Page() {
     Choose_History_Transaction_Type_Page();
 
     return;
-  }  else if(input == "3") {
+  } else if(input == "3") {
 
     return;
-  }  else if(input == "4") {
+  } else if(input == "4") {
 
     return;
   } else if(input == "5") {
@@ -412,10 +480,8 @@ void loader() {
   
   dataBase.open("db.txt");
   if(dataBase.fail()) return;
-
   while(!dataBase.eof()) {
     getline(dataBase, tempData);
-
     if(tempData == "{") {
       getline(dataBase, tempData);
       tempData.erase(0, 8);
@@ -423,14 +489,14 @@ void loader() {
       
       getline(dataBase, tempData);
       tempData.erase(0, 8);
-      data.year[data.counter] =stoi(tempData);
+      data.year[data.counter] = stoi(tempData);
       
       getline(dataBase, tempData);
       tempData.erase(0, 8);
       data.month[data.counter] = stoi(tempData);
 
       getline(dataBase, tempData);
-      tempData.erase(0, 9);
+      tempData.erase(0, 7);
       data.day[data.counter] = stoi(tempData);
 
       getline(dataBase, tempData);
@@ -439,7 +505,13 @@ void loader() {
 
       getline(dataBase, tempData);
       tempData.erase(0, 8);
-      data.desc[data.counter] = stoi(tempData);
+      data.desc[data.counter] = tempData;
+
+      if(data.type[data.counter] == "Pemasukan") {
+        data.balance += data.amount[data.counter];
+      } else if(data.type[data.counter] == "Pengeluaran") {
+        data.balance -= data.amount[data.counter];
+      }
 
       data.counter++;
     }
@@ -449,6 +521,7 @@ void loader() {
   return;
 }
 
+// Save to DB
 void Save_DB() {
   // Variables
   ofstream dataBase;
@@ -459,10 +532,10 @@ void Save_DB() {
     dataBase << "{" << endl;
     dataBase << "  Type: " << data.type[i] << endl;
     dataBase << "  Year: " << data.year[i] << endl;
-    dataBase << "  Month: " << data.year[i] << endl;
-    dataBase << "  Day: " << data.year[i] << endl;
-    dataBase << "  Amount: " << data.year[i] << endl;
-    dataBase << "  Desc: " << data.year[i] << endl;
+    dataBase << "  Month: " << data.month[i] << endl;
+    dataBase << "  Day: " << data.day[i] << endl;
+    dataBase << "  Amount: " << data.amount[i] << endl;
+    dataBase << "  Desc: " << data.desc[i] << endl;
     dataBase << "}" << endl;
   }
   dataBase.close();

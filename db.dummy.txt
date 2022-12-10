@@ -1,0 +1,40 @@
+{
+  Type: Pemasukan
+  Year: 2022
+  Month: 3
+  Day: 25
+  Amount: 500000
+  Desc: Uang jajan
+}
+{
+  Type: Pemasukan
+  Year: 2022
+  Month: 3
+  Day: 25
+  Amount: 3500000
+  Desc: gajian
+}
+{
+  Type: Pengeluaran
+  Year: 2022
+  Month: 3
+  Day: 25
+  Amount: 10000
+  Desc: beli makan
+}
+{
+  Type: Pengeluaran
+  Year: 2022
+  Month: 3
+  Day: 25
+  Amount: 300000
+  Desc: bayar wifi
+}
+{
+  Type: Pengeluaran
+  Year: 2022
+  Month: 3
+  Day: 25
+  Amount: 500000
+  Desc: bayar lonte
+}
