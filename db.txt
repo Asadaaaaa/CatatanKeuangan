@@ -35,6 +35,6 @@
   Year: 2022
   Month: 3
   Day: 25
-  Amount: 190000
-  Desc: Beli Pods
+  Amount: 500000
+  Desc: bayar lonte
 }

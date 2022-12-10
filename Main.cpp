@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -28,8 +29,8 @@ struct Account {
   string username = "SMARPL", password = "1234";
 };
 
-// Struct for data financial
-struct Data {
+// Struct for financialData financial
+struct FinancialData {
   string type[99999] = {};
   int year[99999] = {};
   int month[99999] = {};
@@ -42,7 +43,7 @@ struct Data {
 
 // Declare a Structs
 UI ui;
-Data data;
+FinancialData financialData;
 
 //////////////////////////////////////////////
 
@@ -53,13 +54,54 @@ Data data;
 void Initial_Income_Page() {
   // Variables
   string input;
+  int counter = 0;
+  int year[99999] = {};
+
+  // Algo
+  for(int i = 0; i < financialData.counter; i++) {
+    if(counter == 0) {
+      year[counter] = financialData.year[i];
+      counter++;
+    } else {
+      bool isExist = false;
+      for(int j = 0; j < counter; j++) {
+        if(financialData.year[i] == year[j]) {
+          isExist = true;
+          break;
+        }
+      }
+      if(isExist == false) {
+        year[counter] = financialData.year[i];
+        counter++;
+      }
+    }
+  }
+  sort(year, year + (sizeof(year) / sizeof(year)));
 
   // Layouts
+  system("cls");
   cout << ui.border << endl;
   cout << "               Modal Awal" << endl;
-  cout << " Modal Awal kamu: " << data.amount[0] << endl;
+  cout << ui.border << endl << endl;
+  if(financialData.counter == 0) {
+    cout << " Data transaksi tidak ada!" << endl;
+  }
+  for(int i = 0; i < counter; i++) {
+    for(int j = 1; j <= 12; j++) {
+      int total = 0;
+      for(int k = 0; k < financialData.counter; k++) {
+        if(financialData.year[k] == year[i] && financialData.month[k] == j) {
+          total += financialData.amount[k];
+        }
+      }
+      if(total != 0) {
+        cout << " -> Modal pada bulan ke-" << j << " Tahun " << year[i] << ": " << total << endl;
+      }
+    }
+  }
+  cout << endl << " [0] Kembali" << endl;
   cout << ui.border << endl;
-  cout << "Ketik \"0\" untuk kembali" << endl;
+  cout << "> Pilih Menu: ";
 
   // Input
   getline(cin, input);
@@ -86,15 +128,15 @@ void History_Transaction_Page() {
   cout << ui.border << endl;
   cout << "             Riwayat Transaksi" << endl;
   cout << ui.border << endl;
-  if(data.counter == 0) {
+  if(financialData.counter == 0) {
     cout << endl << " Data transaksi tidak ada!" << endl << endl;
   }
-  for(int i = (data.counter - 1); i >= 0; i--) {
+  for(int i = (financialData.counter - 1); i >= 0; i--) {
     counter++;
-    cout << " [" << (i + 1) << "] " << data.type[i] << endl;
-    cout << "     Tanggal:  " << data.year[i] << "/" << data.month[i] << "/" << data.day[i] << endl;
-    cout << "     Jumlah: " << data.amount[i] << endl;
-    cout << "     Keterangan: " << data.desc[i] << endl << endl;
+    cout << " [" << (i + 1) << "] " << financialData.type[i] << endl;
+    cout << "     Tanggal:  " << financialData.year[i] << "/" << financialData.month[i] << "/" << financialData.day[i] << endl;
+    cout << "     Jumlah: " << financialData.amount[i] << endl;
+    cout << "     Keterangan: " << financialData.desc[i] << endl << endl;
 
     if(counter == 10) break;
   }
@@ -126,13 +168,12 @@ void Financial_Notes_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Catatan Keuangan" << endl << endl;
-  cout << " Uang kamu: " << data.balance << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
   cout << ui.border << endl;
   cout << " [1] Rata-rata pengeluaran per hari" << endl;
-  cout << " [2] Rata-rata pengeluaran per minggu" << endl;
-  cout << " [3] Rata-rata pengeluaran per bulan" << endl;
-  cout << " [4] Riwayat transaksi" << endl;
-  cout << " [5] Modal awal" << endl;
+  cout << " [2] Rata-rata pengeluaran per bulan" << endl;
+  cout << " [3] Riwayat transaksi" << endl;
+  cout << " [4] Modal awal" << endl;
   cout << " [0] Kembali" << endl;
   cout << ui.border << endl;
   
@@ -147,15 +188,12 @@ void Financial_Notes_Page() {
 
     return;
   } else if(input == "3") {
-
-    return;
-  } else if(input == "4") {
     History_Transaction_Page();
     
     return;
-  } else if(input == "5") {
+  } else if(input == "4") {
     Initial_Income_Page();
-    
+
     return;
   } else if(input == "0") {
     Main_Page();
@@ -174,7 +212,7 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
   system("cls");
   cout << ui.border << endl;
   cout << "            Tambah Riwayat " << jenis_riwayat << endl << endl;
-  cout << " Uang kamu: " << data.balance << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
   cout << ui.border << endl;
   cout << " Tahun      : " << tahun << endl; 
   cout << " Bulan      : " << bulan << endl; 
@@ -309,9 +347,9 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
     return;
   } else {
     if(jenis_riwayat == "Pemasukan") {
-      data.balance += stoi(nominal);
+      financialData.balance += stoi(nominal);
     } else if(jenis_riwayat == "Pengeluaran") {
-      data.balance -= stoi(nominal);
+      financialData.balance -= stoi(nominal);
     }
     Add_Notes(jenis_riwayat, tahun, bulan, hari, nominal, keterangan);
     notificator("Riwayat Berhasil Ditambahkan", 38, 50);
@@ -330,7 +368,7 @@ void Choose_History_Transaction_Type_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Tambah Catatan Keuangan" << endl << endl;
-  cout << " Uang kamu: " << data.balance << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
   cout << ui.border << endl;
   cout << " [1] Tambah Riwayat Pemasukan" << endl;
   cout << " [2] Tambah Riwayat Pengeluaran" << endl;
@@ -366,7 +404,7 @@ void Main_Page() {
   cout << ui.border << endl;
   cout << "             SELAMAT DATANG DI SMARPL" << endl;
   cout << "            (SISTEM MONETER ANAK RPL)" << endl << endl;
-  cout << " Uang kamu: " << data.balance << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
   cout << ui.border << endl;
   cout << " [1] Tampilkan catatan keuangan" << endl;
   cout << " [2] Tambah catatan keuangan" << endl;
@@ -485,35 +523,35 @@ void loader() {
     if(tempData == "{") {
       getline(dataBase, tempData);
       tempData.erase(0, 8);
-      data.type[data.counter] = tempData;
+      financialData.type[financialData.counter] = tempData;
       
       getline(dataBase, tempData);
       tempData.erase(0, 8);
-      data.year[data.counter] = stoi(tempData);
+      financialData.year[financialData.counter] = stoi(tempData);
       
       getline(dataBase, tempData);
       tempData.erase(0, 8);
-      data.month[data.counter] = stoi(tempData);
+      financialData.month[financialData.counter] = stoi(tempData);
 
       getline(dataBase, tempData);
       tempData.erase(0, 7);
-      data.day[data.counter] = stoi(tempData);
+      financialData.day[financialData.counter] = stoi(tempData);
 
       getline(dataBase, tempData);
       tempData.erase(0, 10);
-      data.amount[data.counter] = stoi(tempData);
+      financialData.amount[financialData.counter] = stoi(tempData);
 
       getline(dataBase, tempData);
       tempData.erase(0, 8);
-      data.desc[data.counter] = tempData;
+      financialData.desc[financialData.counter] = tempData;
 
-      if(data.type[data.counter] == "Pemasukan") {
-        data.balance += data.amount[data.counter];
-      } else if(data.type[data.counter] == "Pengeluaran") {
-        data.balance -= data.amount[data.counter];
+      if(financialData.type[financialData.counter] == "Pemasukan") {
+        financialData.balance += financialData.amount[financialData.counter];
+      } else if(financialData.type[financialData.counter] == "Pengeluaran") {
+        financialData.balance -= financialData.amount[financialData.counter];
       }
 
-      data.counter++;
+      financialData.counter++;
     }
   }
 
@@ -528,14 +566,14 @@ void Save_DB() {
 
   // Algo
   dataBase.open("db.txt", ios::trunc);
-  for(int i = 0; i < data.counter; i++) {
+  for(int i = 0; i < financialData.counter; i++) {
     dataBase << "{" << endl;
-    dataBase << "  Type: " << data.type[i] << endl;
-    dataBase << "  Year: " << data.year[i] << endl;
-    dataBase << "  Month: " << data.month[i] << endl;
-    dataBase << "  Day: " << data.day[i] << endl;
-    dataBase << "  Amount: " << data.amount[i] << endl;
-    dataBase << "  Desc: " << data.desc[i] << endl;
+    dataBase << "  Type: " << financialData.type[i] << endl;
+    dataBase << "  Year: " << financialData.year[i] << endl;
+    dataBase << "  Month: " << financialData.month[i] << endl;
+    dataBase << "  Day: " << financialData.day[i] << endl;
+    dataBase << "  Amount: " << financialData.amount[i] << endl;
+    dataBase << "  Desc: " << financialData.desc[i] << endl;
     dataBase << "}" << endl;
   }
   dataBase.close();
@@ -621,23 +659,23 @@ void notificator(string text, int borderLen, int parentLen) {
 }
 
 void Add_Notes(string jenis_riwayat, string tahun, string bulan, string hari, string nominal, string keterangan) {
-  data.type[data.counter] = jenis_riwayat;
-  data.year[data.counter] = stoi(tahun);
-  data.month[data.counter] = stoi(bulan);
-  data.day[data.counter] = stoi(hari);
-  data.amount[data.counter] = stoi(nominal);
-  data.desc[data.counter] = keterangan;
-  data.counter++;
+  financialData.type[financialData.counter] = jenis_riwayat;
+  financialData.year[financialData.counter] = stoi(tahun);
+  financialData.month[financialData.counter] = stoi(bulan);
+  financialData.day[financialData.counter] = stoi(hari);
+  financialData.amount[financialData.counter] = stoi(nominal);
+  financialData.desc[financialData.counter] = keterangan;
+  financialData.counter++;
 
   Save_DB();
   /* for(int i = 0; i <= 99999; i++) {
-    if(data.type[i] == "") {
-      data.type[i] = jenis_riwayat;
-      data.year[i] = stoi(tahun);
-      data.month[i] = stoi(bulan);
-      data.day[i] = stoi(hari);
-      data.amount[i] = stoi(nominal);
-      data.desc[i] = keterangan;
+    if(financialData.type[i] == "") {
+      financialData.type[i] = jenis_riwayat;
+      financialData.year[i] = stoi(tahun);
+      financialData.month[i] = stoi(bulan);
+      financialData.day[i] = stoi(hari);
+      financialData.amount[i] = stoi(nominal);
+      financialData.desc[i] = keterangan;
 
       break;
     }
