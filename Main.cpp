@@ -74,8 +74,7 @@ void Delete_Outcome_Transaction_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Hapus Catatan Keuangan" << endl;
-  cout << "                    Pengeluaran" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                    Pengeluaran" << endl;
   cout << ui.border << endl;
   for(int i = 0; i < financialData.counter; i++) {
     if(financialData.type[i] == "Pengeluaran") {
@@ -148,8 +147,7 @@ void Delete_Income_Transaction_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Hapus Catatan Keuangan" << endl;
-  cout << "                    Pemasukan" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                    Pemasukan" << endl;
   cout << ui.border << endl;
   for(int i = 0; i < financialData.counter; i++) {
     if(financialData.type[i] == "Pemasukan") {
@@ -218,8 +216,7 @@ void Choose_Type_Delete_Transaction_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Hapus Catatan Keuangan" << endl;
-  cout << "                    Pilih Tipe" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                    Pilih Tipe" << endl;
   cout << ui.border << endl;
   cout << " [1] Pemasukan" << endl;
   cout << " [2] Pengeluaran" << endl;
@@ -258,8 +255,7 @@ void Change_Outcome_Transaction_Page_3(int id, string changeType) {
       system("cls");
       cout << ui.border << endl;
       cout << "             Menu Ubah Catatan Keuangan" << endl;
-      cout << "                      Pengeluaran" << endl << endl;
-      cout << " Uang kamu: " << financialData.balance << endl;
+      cout << "                      Pengeluaran" << endl;
       cout << ui.border << endl;
       cout << " -> " << "Id: " << (id+1) << endl;
       cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -372,8 +368,7 @@ void Change_Outcome_Transaction_Page_3(int id, string changeType) {
     system("cls");
     cout << ui.border << endl;
     cout << "             Menu Ubah Catatan Keuangan" << endl;
-    cout << "                      Pengeluaran" << endl << endl;
-    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << "                      Pengeluaran" << endl;
     cout << ui.border << endl;
     cout << " -> " << "Id: " << (id+1) << endl;
     cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -411,8 +406,7 @@ void Change_Outcome_Transaction_Page_3(int id, string changeType) {
     system("cls");
     cout << ui.border << endl;
     cout << "             Menu Ubah Catatan Keuangan" << endl;
-    cout << "                      Pengeluaran" << endl << endl;
-    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << "                      Pengeluaran" << endl;
     cout << ui.border << endl;
     cout << " -> " << "Id: " << (id+1) << endl;
     cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -447,8 +441,7 @@ void Change_Outcome_Transaction_Page_2(int id) {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Ubah Catatan Keuangan" << endl;
-  cout << "                      Pengeluaran" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                      Pengeluaran" << endl;
   cout << ui.border << endl;
   cout << " -> " << "Id: " << (id + 1) << endl;
   cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -493,8 +486,7 @@ void Change_Outcome_Transaction_Page_1() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Ubah Catatan Keuangan" << endl;
-  cout << "                      Pengeluaran" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                      Pengeluaran" << endl;
   cout << ui.border << endl;
   for(int i = 0; i < financialData.counter; i++) {
     if(financialData.type[i] == "Pengeluaran") {
@@ -553,8 +545,7 @@ void Change_Income_Transaction_Page_3(int id, string changeType) {
       system("cls");
       cout << ui.border << endl;
       cout << "             Menu Ubah Catatan Keuangan" << endl;
-      cout << "                      Pemasukan" << endl << endl;
-      cout << " Uang kamu: " << financialData.balance << endl;
+      cout << "                      Pemasukan" << endl;
       cout << ui.border << endl;
       cout << " -> " << "Id: " << (id+1) << endl;
       cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -667,8 +658,7 @@ void Change_Income_Transaction_Page_3(int id, string changeType) {
     system("cls");
     cout << ui.border << endl;
     cout << "             Menu Ubah Catatan Keuangan" << endl;
-    cout << "                      Pemasukan" << endl << endl;
-    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << "                      Pemasukan" << endl;
     cout << ui.border << endl;
     cout << " -> " << "Id: " << (id+1) << endl;
     cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -706,8 +696,7 @@ void Change_Income_Transaction_Page_3(int id, string changeType) {
     system("cls");
     cout << ui.border << endl;
     cout << "             Menu Ubah Catatan Keuangan" << endl;
-    cout << "                      Pemasukan" << endl << endl;
-    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << "                      Pemasukan" << endl;
     cout << ui.border << endl;
     cout << " -> " << "Id: " << (id+1) << endl;
     cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -742,8 +731,7 @@ void Change_Income_Transaction_Page_2(int id) {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Ubah Catatan Keuangan" << endl;
-  cout << "                      Pemasukan" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                      Pemasukan" << endl;
   cout << ui.border << endl;
   cout << " -> " << "Id: " << (id + 1) << endl;
   cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
@@ -784,8 +772,7 @@ void Change_Income_Transaction_Page_1() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Ubah Catatan Keuangan" << endl;
-  cout << "                      Pemasukan" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                      Pemasukan" << endl;
   cout << ui.border << endl;
   for(int i = 0; i < financialData.counter; i++) {
     if(financialData.type[i] == "Pemasukan") {
@@ -838,8 +825,7 @@ void Choose_Type_Change_Transaction_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             Menu Ubah Catatan Keuangan" << endl;
-  cout << "                    Pilih Tipe" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "                    Pilih Tipe" << endl;
   cout << ui.border << endl;
   cout << " [1] Pemasukan" << endl;
   cout << " [2] Pengeluaran" << endl;
@@ -873,8 +859,7 @@ void Edit_Transaction_Menu_Page() {
   // Layout
   system("cls");
   cout << ui.border << endl;
-  cout << "             Menu Ubah Catatan Keuangan" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl;
   cout << ui.border << endl;
   cout << " [1] Ubah" << endl;
   cout << " [2] Hapus" << endl;
@@ -1130,6 +1115,35 @@ void Average_Spent_Per_Month() {
   }
 }
 
+void Balance() {
+  // Variables
+  string input;
+
+  // Layout
+  system("cls");
+  cout << ui.border << endl;
+  cout << "                    Sisa Uang" << endl;
+  cout << ui.border << endl << endl;
+  cout << " -> Sisa uang kamu adalah: " << financialData.balance << endl << endl;
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input ==  "0") {
+    Financial_Notes_Page();
+
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Balance();
+
+    return;
+  }
+}
+
 void Financial_Notes_Page() {
   // Variables
   string input;
@@ -1137,13 +1151,13 @@ void Financial_Notes_Page() {
   // Layout
   system("cls");
   cout << ui.border << endl;
-  cout << "             Menu Catatan Keuangan" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "             Menu Catatan Keuangan" << endl;
   cout << ui.border << endl;
   cout << " [1] Rata-rata pengeluaran per hari" << endl;
   cout << " [2] Rata-rata pengeluaran per bulan" << endl;
   cout << " [3] Riwayat transaksi" << endl;
   cout << " [4] Modal awal" << endl;
+  cout << " [5] Sisa Uang" << endl;
   cout << " [0] Kembali" << endl;
   cout << ui.border << endl;
   
@@ -1167,6 +1181,10 @@ void Financial_Notes_Page() {
     Initial_Income_Page();
 
     return;
+  } else if(input == "5") {
+    Balance();
+
+    return;
   } else if(input == "0") {
     Main_Page();
 
@@ -1183,8 +1201,7 @@ void Add_History_Transaction_Page(string jenis_riwayat, string tahun, string bul
   // Layouts
   system("cls");
   cout << ui.border << endl;
-  cout << "            Tambah Riwayat " << jenis_riwayat << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "            Tambah Riwayat " << jenis_riwayat << endl;
   cout << ui.border << endl;
   cout << " Tahun      : " << tahun << endl; 
   cout << " Bulan      : " << bulan << endl; 
@@ -1365,8 +1382,7 @@ void Choose_History_Transaction_Type_Page() {
   // Layouts
   system("cls");
   cout << ui.border << endl;
-  cout << "             Tambah Catatan Keuangan" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "             Tambah Catatan Keuangan" << endl;
   cout << ui.border << endl;
   cout << " [1] Tambah Riwayat Pemasukan" << endl;
   cout << " [2] Tambah Riwayat Pengeluaran" << endl;
@@ -1434,8 +1450,7 @@ void Main_Page() {
   system("cls");
   cout << ui.border << endl;
   cout << "             SELAMAT DATANG DI SMARPL" << endl;
-  cout << "            (SISTEM MONETER ANAK RPL)" << endl << endl;
-  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << "            (SISTEM MONETER ANAK RPL)" << endl;
   cout << ui.border << endl;
   cout << " [1] Tampilkan catatan keuangan" << endl;
   cout << " [2] Tambah catatan keuangan" << endl;
