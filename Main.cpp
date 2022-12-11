@@ -1028,36 +1028,33 @@ void History_Transaction_Page() {
 void Average_Spent_Per_Day() {
   // Variables
   string input;
-  int dayCounter = 0, total = 0;
-  
-  // Algo
-  for(int i = 2021; i <= 2030; i++) {
-    for(int j = 1; j <= 12; j++) {
-      for(int k = 1; k <= 31; k++) {
-        int totalDay = 0;
-        for(int l = 0; l < financialData.counter; l++) {
-          if(financialData.type[l] == "Pengeluaran" && financialData.year[l] == i && financialData.month[l] == j && financialData.day[l] == k) {
-            totalDay += financialData.amount[l];
-          }
-        }
-        if(totalDay != 0) {
-          total += totalDay;
-          dayCounter++;
-        }
-      }
-    }
-  }
-
-  // Average Value
-  int dayAvg = total / dayCounter;
+  int total = 0;
 
   // Layout
   system("cls");
   cout << ui.border << endl;
   cout << "          Rata-Rata Pengeluaran per Hari" << endl;
   cout << ui.border << endl;
-  cout << endl << " -> " << dayAvg << endl << endl;
-  cout << " [0] Kembali" << endl;
+  
+  // Algo
+  for(int i = 2021; i <= 2030; i++) {
+    for(int j = 1; j <= 12; j++) {
+      for(int k = 1; k <= 31; k++) {
+        int total = 0, dayCounter = 0;
+        for(int l = 0; l < financialData.counter; l++) {
+          if(financialData.type[l] == "Pengeluaran" && financialData.year[l] == i && financialData.month[l] == j && financialData.day[l] == k) {
+            total += financialData.amount[l];
+            dayCounter++;
+          }
+        }
+
+        if(dayCounter != 0) {
+          cout << " -> [" << i << "/" << j << "/" << k << "] : " << (total/dayCounter) << endl;
+        }
+      }
+    }
+  }
+  cout << endl << " [0] Kembali" << endl;
   cout << ui.border << endl;
   cout << "> Pilih Menu: ";
 
@@ -1080,33 +1077,31 @@ void Average_Spent_Per_Month() {
   // Variables
   string input;
   int monthCounter = 0, total = 0;
-  
-  // Algo
-  for(int i = 2021; i <= 2030; i++) {
-    for(int j = 1; j <= 12; j++) {
-      int totalMonth = 0;
-      for(int k = 0; k < financialData.counter; k++) {
-        if(financialData.type[k] == "Pengeluaran" && financialData.year[k] == i && financialData.month[k] == j) {
-          totalMonth += financialData.amount[k];
-        }
-      }
-      if(totalMonth != 0) {
-        total += totalMonth;
-        monthCounter++;
-      }
-    }
-  }
-
-  // Average Value
-  int monthAvg = total / monthCounter;
 
   // Layout
   system("cls");
   cout << ui.border << endl;
   cout << "         Rata-Rata Pengeluaran per Bulan" << endl;
   cout << ui.border << endl;
-  cout << endl << " -> " << monthAvg << endl << endl;
-  cout << " [0] Kembali" << endl;
+  
+  // Algo
+  for(int i = 2021; i <= 2030; i++) {
+    for(int j = 1; j <= 12; j++) {
+      int total = 0, monthCounter = 0;
+      for(int k = 0; k < financialData.counter; k++) {
+        if(financialData.type[k] == "Pengeluaran" && financialData.year[k] == i && financialData.month[k] == j) {
+          total += financialData.amount[k];
+          monthCounter++;
+        }
+      }
+
+      if(monthCounter != 0) {
+        cout << " -> [" << i << "/" << j << "] : " << (total/monthCounter) << endl;
+      }
+    }
+  }
+
+  cout << endl << " [0] Kembali" << endl;
   cout << ui.border << endl;
   cout << "> Pilih Menu: ";
 
