@@ -13,6 +13,13 @@ void Main_Page();
 void loader();
 void notificator(string text, int borderLen, int parentLen);
 void Add_Notes(string jenis_riwayat, string tahun, string bulan, string hari, string nominal, string keterangan);
+void Choose_Type_Change_Transaction_Page();
+void Change_Income_Transaction_Page_1();
+void Change_Income_Transaction_Page_2(int id);
+void Change_Outcome_Transaction_Page_1();
+void Change_Outcome_Transaction_Page_2(int id);
+void Choose_Type_Delete_Transaction_Page();
+void Save_DB();
 
 //////////////////////////////////////////////
 
@@ -57,6 +64,842 @@ FinancialData financialData;
 
 
 /**************** SMARPL Page ****************/
+
+void Delete_Outcome_Transaction_Page() {
+    // Variables
+  string input;
+  int intInput;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Hapus Catatan Keuangan" << endl;
+  cout << "                    Pengeluaran" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  for(int i = 0; i < financialData.counter; i++) {
+    if(financialData.type[i] == "Pengeluaran") {
+      cout << " -> " << "Id: " << (i + 1) << endl;
+      cout << "    " << "Tanggal: " << financialData.year[i] << "/" << financialData.month[i] << "/" << financialData.day[i] << endl;
+      cout << "    " << "Jumlah: " << financialData.amount[i] << endl;
+      cout << "    " << "Keterangan: " << financialData.desc[i] << endl << endl;
+    }
+  }
+  cout << "[0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih id: " << endl;
+
+  // Inputs
+  getline(cin, input);
+  if(input == "0") {
+    Choose_Type_Delete_Transaction_Page();
+
+    return;
+  }
+
+  try {
+    intInput = stoi(input);
+  } catch(exception &err) {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Change_Income_Transaction_Page_1();
+
+    return;
+  }
+
+  if(financialData.type[intInput-1] == "Pengeluaran") {
+    int counter = 0;
+
+    for(int i = 0; i < financialData.counter; i++) {
+      if(i != (intInput - 1)) {
+        financialData.type[counter] = financialData.type[i];
+        financialData.year[counter] = financialData.year[i];
+        financialData.month[counter] = financialData.month[i];
+        financialData.day[counter] = financialData.day[i];
+        financialData.amount[counter] = financialData.amount[i];
+        financialData.desc[counter] = financialData.desc[i];
+
+        counter++;
+      } else {
+        financialData.balance -= financialData.amount[i];
+      }
+    }
+    financialData.counter--;
+
+    notificator("Riwayat berhasil dihapus", 38, 50);
+    
+    Choose_Type_Delete_Transaction_Page();
+
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+    Delete_Outcome_Transaction_Page();
+    return;
+  }
+
+}
+
+void Delete_Income_Transaction_Page() {
+  // Variables
+  string input;
+  int intInput;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Hapus Catatan Keuangan" << endl;
+  cout << "                    Pemasukan" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  for(int i = 0; i < financialData.counter; i++) {
+    if(financialData.type[i] == "Pemasukan") {
+      cout << " -> " << "Id: " << (i+1) << endl;
+      cout << "    " << "Tanggal: " << financialData.year[i] << "/" << financialData.month[i] << "/" << financialData.day[i] << endl;
+      cout << "    " << "Jumlah: " << financialData.amount[i] << endl;
+      cout << "    " << "Keterangan: " << financialData.desc[i] << endl << endl;
+    }
+  }
+  cout << "[0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih id: " << endl;
+
+  // Inputs
+  getline(cin, input);
+  if(input == "0") {
+    Choose_Type_Delete_Transaction_Page();
+
+    return;
+  }
+
+  try {
+    intInput = stoi(input);
+  } catch(exception &err) {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Change_Income_Transaction_Page_1();
+
+    return;
+  }
+
+  if(financialData.type[intInput-1] == "Pemasukan") {
+    int counter = 0;
+
+    for(int i = 0; i < financialData.counter; i++) {
+      if(i != (intInput - 1)) {
+        financialData.type[counter] = financialData.type[i];
+        financialData.year[counter] = financialData.year[i];
+        financialData.month[counter] = financialData.month[i];
+        financialData.day[counter] = financialData.day[i];
+        financialData.amount[counter] = financialData.amount[i];
+        financialData.desc[counter] = financialData.desc[i];
+
+        counter++;
+      } else {
+        financialData.balance -= financialData.amount[i];
+      }
+    }
+    financialData.counter--;
+    
+    notificator("Riwayat berhasil dihapus", 38, 50);
+    Choose_Type_Delete_Transaction_Page();
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+    Delete_Income_Transaction_Page();
+    return;
+  }
+}
+
+void Choose_Type_Delete_Transaction_Page() {
+  // Variables
+  string input;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Hapus Catatan Keuangan" << endl;
+  cout << "                    Pilih Tipe" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  cout << " [1] Pemasukan" << endl;
+  cout << " [2] Pengeluaran" << endl;
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input == "0") {
+    Main_Page();
+
+    return;
+  } else if(input == "1") {
+    Delete_Income_Transaction_Page();
+  } else if(input == "2") {
+    Delete_Outcome_Transaction_Page();
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    return;
+  }
+}
+
+void Change_Outcome_Transaction_Page_3(int id, string changeType) {
+  // Variables
+  string input;
+  int intInput;
+
+  if(changeType == "tanggal") {
+    // Variables
+    int count = 0;
+
+    while(true) {
+      // Layouts
+      system("cls");
+      cout << ui.border << endl;
+      cout << "             Menu Ubah Catatan Keuangan" << endl;
+      cout << "                      Pengeluaran" << endl << endl;
+      cout << " Uang kamu: " << financialData.balance << endl;
+      cout << ui.border << endl;
+      cout << " -> " << "Id: " << (id+1) << endl;
+      cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+      cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+      cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+      cout << "Ketik \"#\" untuk kembali" << endl;
+      cout << ui.border << endl;
+      cout << "> Input ";
+      if(count == 0) {
+        cout << "tahun: " << endl;
+      } else if(count == 1) {
+        cout << "bulan: " << endl;
+      } else if(count == 2) {
+        cout << "hari: " << endl;
+      }
+
+      // Layouts
+      getline(cin, input);
+      if(input == "#") {
+        Change_Outcome_Transaction_Page_2(id);
+
+        return;
+      }
+      try {
+        intInput = stoi(input);
+      } catch(exception &err) {
+        notificator("Harus berupa angka", 38, 50);
+
+        continue;
+      }
+      if(count == 0) {
+        if(intInput < 2021 || intInput > 2030) {
+          notificator("Tahun harus >= 2021 atau <= 2030", 38, 50);
+
+          continue;
+        } else {
+          financialData.year[id] = intInput;
+          count++;
+          continue;
+        }
+      } else if(count == 1) {
+        if(intInput < 1 || intInput > 12) {
+          notificator("Bulan harus >= 1 atau <= 2030", 38, 50);
+
+          continue;
+        } else {
+          financialData.month[id] = intInput;
+          count++;
+          continue;
+        }
+      } else if(count == 2) {
+        if(intInput < 1) {
+          notificator("Hari tidak boleh lebih kecil dari 1", 38, 50);
+
+          continue;;
+        } else {
+          if(financialData.month[id] == 2) {
+            if(financialData.year[id] % 4 == 0) {
+              if(intInput > 29) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 29 Hari (Kabisat)", 48, 50);
+                continue;
+              }
+            } else {
+              if(intInput > 28) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 28 Hari (Bukan Kabisat)", 48, 50);
+
+                continue;
+              }
+            }
+          } else if(financialData.month[id] <= 7) {
+            if(financialData.month[id] % 2 == 0) {
+              if(intInput > 30) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 30 Hari", 38, 50);
+
+                continue;
+              }
+            } else {
+              if(intInput > 31) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 31 Hari", 38, 50);
+
+                continue;
+              }
+            }
+          } else {
+            if(financialData.month[id] % 2 == 0) {
+              if(intInput > 31) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 31 Hari", 38, 50);
+
+                continue;
+              }
+            } else {
+              if(intInput > 30) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 30 Hari", 38, 50);
+
+                continue;
+              }
+            }
+          }
+
+          financialData.day[id] = intInput;
+          Save_DB();
+          notificator("Tanggal Berhasil diubah", 38, 50);
+          Change_Outcome_Transaction_Page_2(id);
+          return;
+        }
+      }
+    }
+  } else if(changeType == "jumlah") {
+    // Layouts
+    system("cls");
+    cout << ui.border << endl;
+    cout << "             Menu Ubah Catatan Keuangan" << endl;
+    cout << "                      Pengeluaran" << endl << endl;
+    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << ui.border << endl;
+    cout << " -> " << "Id: " << (id+1) << endl;
+    cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+    cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+    cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+    cout << "Ketik \"#\" untuk kembali" << endl;
+    cout << ui.border << endl;
+    cout << "> Input jumlah: ";
+
+    // Input
+    getline(cin, input);
+    if(input == "#") {
+      Change_Outcome_Transaction_Page_2(id);
+      return;
+    }
+    try {
+      intInput = stoi(input);
+    } catch(exception &err) {
+      notificator("Input harus berupa angka", 38, 50);
+      Change_Outcome_Transaction_Page_3(id, changeType);
+      return;
+    }
+    if(intInput < 1) {
+      notificator("Input minimal 1", 38, 50);
+      Change_Outcome_Transaction_Page_3(id, changeType);
+      return;
+    }
+    financialData.amount[id] = intInput;
+    Save_DB();
+    notificator("Jumlah berhasil diubah", 38, 50);
+    Change_Outcome_Transaction_Page_2(id);
+    return;
+  } else if(changeType == "keterangan") {
+    // Layouts
+    system("cls");
+    cout << ui.border << endl;
+    cout << "             Menu Ubah Catatan Keuangan" << endl;
+    cout << "                      Pengeluaran" << endl << endl;
+    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << ui.border << endl;
+    cout << " -> " << "Id: " << (id+1) << endl;
+    cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+    cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+    cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+    cout << "Ketik \"#\" untuk kembali" << endl;
+    cout << ui.border << endl;
+    cout << "> Input jumlah: ";
+
+    // Input
+    getline(cin, input);
+    if(input == "#") {
+      Change_Outcome_Transaction_Page_2(id);
+      return;
+    } else {
+      financialData.desc[id] = input;
+      Save_DB();
+      notificator("Keterangan berhasil diubah", 38, 50);
+      Change_Outcome_Transaction_Page_2(id);
+      return;
+    }
+  }
+
+  return;
+}
+
+void Change_Outcome_Transaction_Page_2(int id) {
+  // Variables
+  string input;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl;
+  cout << "                      Pengeluaran" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  cout << " -> " << "Id: " << (id + 1) << endl;
+  cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+  cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+  cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+  cout << " [1] Ubah Tanggal" << endl;
+  cout << " [2] Ubah Jumlah" << endl;
+  cout << " [3] Ubah Keterangan" << endl;
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input == "0") {
+    Change_Outcome_Transaction_Page_1();
+
+    return;
+  } else if(input == "1") {
+    Change_Outcome_Transaction_Page_3(id, "tanggal");
+    return;
+  } else if(input == "2") {
+    Change_Outcome_Transaction_Page_3(id, "jumlah");
+    return;
+  } else if(input == "3") {
+    Change_Outcome_Transaction_Page_3(id, "keterangan");
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+    Change_Outcome_Transaction_Page_2(id);
+    return;
+  }
+}
+
+void Change_Outcome_Transaction_Page_1() {
+  // Variables
+  string input;
+  int intInput;
+  bool isExist = false;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl;
+  cout << "                      Pengeluaran" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  for(int i = 0; i < financialData.counter; i++) {
+    if(financialData.type[i] == "Pengeluaran") {
+      cout << " -> " << "Id: " << (i+1) << endl;
+      cout << "    " << "Tanggal: " << financialData.year[i] << "/" << financialData.month[i] << "/" << financialData.day[i] << endl;
+      cout << "    " << "Jumlah: " << financialData.amount[i] << endl;
+      cout << "    " << "Keterangan: " << financialData.desc[i] << endl << endl;
+    }
+  }
+  cout << "[0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih id: ";
+
+  // Inputs
+  getline(cin, input);
+  if(input == "0") {
+    Choose_Type_Delete_Transaction_Page();
+
+    return;
+  }
+
+  try {
+    intInput = stoi(input);
+  } catch(exception &err) {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Change_Outcome_Transaction_Page_1();
+
+    return;
+  }
+
+  if(financialData.type[intInput-1] == "Pengeluaran") {
+    Change_Outcome_Transaction_Page_2(intInput-1);
+
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Change_Outcome_Transaction_Page_1();
+
+    return;
+  }
+}
+
+void Change_Income_Transaction_Page_3(int id, string changeType) {
+  // Variables
+  string input;
+  int intInput;
+
+  if(changeType == "tanggal") {
+    // Variables
+    int count = 0;
+
+    while(true) {
+      // Layouts
+      system("cls");
+      cout << ui.border << endl;
+      cout << "             Menu Ubah Catatan Keuangan" << endl;
+      cout << "                      Pemasukan" << endl << endl;
+      cout << " Uang kamu: " << financialData.balance << endl;
+      cout << ui.border << endl;
+      cout << " -> " << "Id: " << (id+1) << endl;
+      cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+      cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+      cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+      cout << "Ketik \"#\" untuk kembali" << endl;
+      cout << ui.border << endl;
+      cout << "> Input ";
+      if(count == 0) {
+        cout << "tahun: " << endl;
+      } else if(count == 1) {
+        cout << "bulan: " << endl;
+      } else if(count == 2) {
+        cout << "hari: " << endl;
+      }
+
+      // Layouts
+      getline(cin, input);
+      if(input == "#") {
+        Change_Income_Transaction_Page_2(id);
+
+        return;
+      }
+      try {
+        intInput = stoi(input);
+      } catch(exception &err) {
+        notificator("Harus berupa angka", 38, 50);
+
+        continue;
+      }
+      if(count == 0) {
+        if(intInput < 2021 || intInput > 2030) {
+          notificator("Tahun harus >= 2021 atau <= 2030", 38, 50);
+
+          continue;
+        } else {
+          financialData.year[id] = intInput;
+          count++;
+          continue;
+        }
+      } else if(count == 1) {
+        if(intInput < 1 || intInput > 12) {
+          notificator("Bulan harus >= 1 atau <= 2030", 38, 50);
+
+          continue;
+        } else {
+          financialData.month[id] = intInput;
+          count++;
+          continue;
+        }
+      } else if(count == 2) {
+        if(intInput < 1) {
+          notificator("Hari tidak boleh lebih kecil dari 1", 38, 50);
+
+          continue;;
+        } else {
+          if(financialData.month[id] == 2) {
+            if(financialData.year[id] % 4 == 0) {
+              if(intInput > 29) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 29 Hari (Kabisat)", 48, 50);
+                continue;
+              }
+            } else {
+              if(intInput > 28) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 28 Hari (Bukan Kabisat)", 48, 50);
+
+                continue;
+              }
+            }
+          } else if(financialData.month[id] <= 7) {
+            if(financialData.month[id] % 2 == 0) {
+              if(intInput > 30) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 30 Hari", 38, 50);
+
+                continue;
+              }
+            } else {
+              if(intInput > 31) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 31 Hari", 38, 50);
+
+                continue;
+              }
+            }
+          } else {
+            if(financialData.month[id] % 2 == 0) {
+              if(intInput > 31) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 31 Hari", 38, 50);
+
+                continue;
+              }
+            } else {
+              if(intInput > 30) {
+                notificator("Bulan " + month.name[financialData.month[id]-1] + " Memiliki 30 Hari", 38, 50);
+
+                continue;
+              }
+            }
+          }
+
+          financialData.day[id] = intInput;
+          Save_DB();
+          notificator("Tanggal Berhasil diubah", 38, 50);
+          Change_Income_Transaction_Page_2(id);
+          return;
+        }
+      }
+    }
+  } else if(changeType == "jumlah") {
+    // Layouts
+    system("cls");
+    cout << ui.border << endl;
+    cout << "             Menu Ubah Catatan Keuangan" << endl;
+    cout << "                      Pemasukan" << endl << endl;
+    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << ui.border << endl;
+    cout << " -> " << "Id: " << (id+1) << endl;
+    cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+    cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+    cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+    cout << "Ketik \"#\" untuk kembali" << endl;
+    cout << ui.border << endl;
+    cout << "> Input jumlah: ";
+
+    // Input
+    getline(cin, input);
+    if(input == "#") {
+      Change_Income_Transaction_Page_2(id);
+      return;
+    }
+    try {
+      intInput = stoi(input);
+    } catch(exception &err) {
+      notificator("Input harus berupa angka", 38, 50);
+      Change_Income_Transaction_Page_3(id, changeType);
+      return;
+    }
+    if(intInput < 1) {
+      notificator("Input minimal 1", 38, 50);
+      Change_Income_Transaction_Page_3(id, changeType);
+      return;
+    }
+    financialData.amount[id] = intInput;
+    Save_DB();
+    notificator("Jumlah berhasil diubah", 38, 50);
+    Change_Income_Transaction_Page_2(id);
+    return;
+  } else if(changeType == "keterangan") {
+    // Layouts
+    system("cls");
+    cout << ui.border << endl;
+    cout << "             Menu Ubah Catatan Keuangan" << endl;
+    cout << "                      Pemasukan" << endl << endl;
+    cout << " Uang kamu: " << financialData.balance << endl;
+    cout << ui.border << endl;
+    cout << " -> " << "Id: " << (id+1) << endl;
+    cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+    cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+    cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+    cout << "Ketik \"#\" untuk kembali" << endl;
+    cout << ui.border << endl;
+    cout << "> Input jumlah: ";
+
+    // Input
+    getline(cin, input);
+    if(input == "#") {
+      Change_Income_Transaction_Page_2(id);
+      return;
+    } else {
+      financialData.desc[id] = input;
+      Save_DB();
+      notificator("Jumlah berhasil diubah", 38, 50);
+      Change_Income_Transaction_Page_2(id);
+      return;
+    }
+  }
+
+  return;
+}
+
+void Change_Income_Transaction_Page_2(int id) {
+  // Variables
+  string input;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl;
+  cout << "                      Pemasukan" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  cout << " -> " << "Id: " << (id + 1) << endl;
+  cout << "    " << "Tanggal: " << financialData.year[id] << "/" << financialData.month[id] << "/" << financialData.day[id] << endl;
+  cout << "    " << "Jumlah: " << financialData.amount[id] << endl;
+  cout << "    " << "Keterangan: " << financialData.desc[id] << endl << endl;
+  cout << " [1] Ubah Tanggal" << endl;
+  cout << " [2] Ubah Jumlah" << endl;
+  cout << " [3] Ubah Keterangan" << endl;
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input == "0") {
+    Change_Income_Transaction_Page_1();
+
+    return;
+  } else if(input == "1") {
+    Change_Income_Transaction_Page_3(id, "tanggal");
+    return;
+  } else if(input == "2") {
+    Change_Income_Transaction_Page_3(id, "jumlah");
+    return;
+  } else if(input == "3") {
+    Change_Income_Transaction_Page_3(id, "keterangan");
+    return;
+  }
+}
+
+void Change_Income_Transaction_Page_1() {
+  // Variables
+  string input;
+  int intInput;
+  bool isExist = false;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl;
+  cout << "                      Pemasukan" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  for(int i = 0; i < financialData.counter; i++) {
+    if(financialData.type[i] == "Pemasukan") {
+      cout << " -> " << "Id: " << (i+1) << endl;
+      cout << "    " << "Tanggal: " << financialData.year[i] << "/" << financialData.month[i] << "/" << financialData.day[i] << endl;
+      cout << "    " << "Jumlah: " << financialData.amount[i] << endl;
+      cout << "    " << "Keterangan: " << financialData.desc[i] << endl << endl;
+    }
+  }
+  cout << "[0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih id: ";
+
+  // Inputs
+  getline(cin, input);
+  if(input == "0") {
+    Choose_Type_Change_Transaction_Page();
+
+    return;
+  }
+
+  try {
+    intInput = stoi(input);
+  } catch(exception &err) {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Change_Income_Transaction_Page_1();
+
+    return;
+  }
+
+  if(financialData.type[intInput-1] == "Pemasukan") {
+    Change_Income_Transaction_Page_2(intInput-1);
+
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Change_Income_Transaction_Page_1();
+
+    return;
+  }
+}
+
+void Choose_Type_Change_Transaction_Page() {
+  // Variables
+  string input;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl;
+  cout << "                    Pilih Tipe" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  cout << " [1] Pemasukan" << endl;
+  cout << " [2] Pengeluaran" << endl;
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input == "0") {
+    Main_Page();
+
+    return;
+  } else if(input == "1") {
+    Change_Income_Transaction_Page_1();
+    return;
+  } else if (input == "2") {
+    Change_Outcome_Transaction_Page_1();
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    return;
+  }
+}
+
+void Edit_Transaction_Menu_Page() {
+  // Variables
+  string input;
+
+  // Layout
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl << endl;
+  cout << " Uang kamu: " << financialData.balance << endl;
+  cout << ui.border << endl;
+  cout << " [1] Ubah" << endl;
+  cout << " [2] Hapus" << endl;
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input == "0") {
+    Main_Page();
+
+    return;
+  } else if(input == "1") {
+    Choose_Type_Change_Transaction_Page();
+    return;
+  } else if(input == "2") {
+    Choose_Type_Delete_Transaction_Page();
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    return;
+  }
+}
 
 void Initial_Income_Page() {
   // Variables
@@ -136,6 +979,8 @@ void History_Transaction_Page() {
   // Variables
   string input;
   int counter = 0;
+  int totalIncome = 0;
+  int totalOutcome = 0;
 
   // Layouts
   system("cls");
@@ -145,15 +990,21 @@ void History_Transaction_Page() {
   if(financialData.counter == 0) {
     cout << endl << " Data transaksi tidak ada!" << endl << endl;
   }
-  for(int i = (financialData.counter - 1); i >= 0; i--) {
+  for(int i = 0; i < financialData.counter; i++) {
     counter++;
     cout << " [" << (i + 1) << "] " << financialData.type[i] << endl;
     cout << "     Tanggal:  " << financialData.year[i] << "/" << financialData.month[i] << "/" << financialData.day[i] << endl;
     cout << "     Jumlah: " << financialData.amount[i] << endl;
     cout << "     Keterangan: " << financialData.desc[i] << endl << endl;
 
-    if(counter == 10) break;
+    if(financialData.type[i] == "Pengeluaran") {
+      totalIncome += financialData.amount[i];
+    } else if(financialData.type[i] == "Pemasukan") {
+      totalOutcome += financialData.amount[i];
+    }
   }
+  cout << " Total Pemasukan: " << totalIncome << endl;
+  cout << " Total Pengeluaran: " << totalOutcome << endl << endl;
   cout << " [0] Kembali" << endl;
   cout << ui.border << endl;
   cout << "> Pilih Menu: ";
@@ -601,6 +1452,7 @@ void Main_Page() {
 
     return;
   } else if(input == "3") {
+    Edit_Transaction_Menu_Page();
 
     return;
   } else if(input == "4") {
