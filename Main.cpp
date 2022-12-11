@@ -990,19 +990,29 @@ void History_Transaction_Page() {
   if(financialData.counter == 0) {
     cout << endl << " Data transaksi tidak ada!" << endl << endl;
   }
-  for(int i = 0; i < financialData.counter; i++) {
-    counter++;
-    cout << " [" << (i + 1) << "] " << financialData.type[i] << endl;
-    cout << "     Tanggal:  " << financialData.year[i] << "/" << financialData.month[i] << "/" << financialData.day[i] << endl;
-    cout << "     Jumlah: " << financialData.amount[i] << endl;
-    cout << "     Keterangan: " << financialData.desc[i] << endl << endl;
 
-    if(financialData.type[i] == "Pengeluaran") {
-      totalIncome += financialData.amount[i];
-    } else if(financialData.type[i] == "Pemasukan") {
-      totalOutcome += financialData.amount[i];
+  for(int i = 2021; i <= 2030; i++) {
+    for(int j = 1; j <= 12; j++) {
+      for(int k = 1; k <= 31; k++) {
+        for(int l = 0; l < financialData.counter; l++) {
+          if(financialData.year[l] == i && financialData.month[l] == j && financialData.day[l] == k) {
+            counter++;
+            cout << " [" << (l + 1) << "] " << financialData.type[l] << endl;
+            cout << "     Tanggal:  " << financialData.year[l] << "/" << financialData.month[l] << "/" << financialData.day[l] << endl;
+            cout << "     Jumlah: " << financialData.amount[l] << endl;
+            cout << "     Keterangan: " << financialData.desc[l] << endl << endl;
+
+            if(financialData.type[l] == "Pengeluaran") {
+              totalIncome += financialData.amount[l];
+            } else if(financialData.type[l] == "Pemasukan") {
+              totalOutcome += financialData.amount[l];
+            }
+          }
+        }
+      }
     }
   }
+  
   cout << " Total Pemasukan: " << totalIncome << endl;
   cout << " Total Pengeluaran: " << totalOutcome << endl << endl;
   cout << " [0] Kembali" << endl;

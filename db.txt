@@ -38,3 +38,19 @@
   Amount: 500000
   Desc: bayar lonte
 }
+{
+  Type: Pengeluaran
+  Year: 2028
+  Month: 2
+  Day: 4
+  Amount: 200000
+  Desc: bayar
+}
+{
+  Type: Pengeluaran
+  Year: 2021
+  Month: 8
+  Day: 20
+  Amount: 900000
+  Desc: tod
+}
