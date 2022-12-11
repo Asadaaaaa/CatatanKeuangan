@@ -237,6 +237,8 @@ void Choose_Type_Delete_Transaction_Page() {
   } else {
     notificator("Menu tidak ditemukan", 38, 50);
 
+    Choose_Type_Delete_Transaction_Page();
+
     return;
   }
 }
@@ -759,6 +761,12 @@ void Change_Income_Transaction_Page_2(int id) {
   } else if(input == "3") {
     Change_Income_Transaction_Page_3(id, "keterangan");
     return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Change_Income_Transaction_Page_2(id);
+
+    return;
   }
 }
 
@@ -848,6 +856,8 @@ void Choose_Type_Change_Transaction_Page() {
   } else {
     notificator("Menu tidak ditemukan", 38, 50);
 
+    Choose_Type_Change_Transaction_Page();
+
     return;
   }
 }
@@ -881,6 +891,8 @@ void Edit_Transaction_Menu_Page() {
     return;
   } else {
     notificator("Menu tidak ditemukan", 38, 50);
+
+    Edit_Transaction_Menu_Page();
 
     return;
   }
@@ -1189,6 +1201,12 @@ void Financial_Notes_Page() {
     Main_Page();
 
     return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Financial_Notes_Page();
+
+    return;
   }
   return;
 }
@@ -1403,6 +1421,12 @@ void Choose_History_Transaction_Type_Page() {
     return;
   } else if(input == "0") {
     Main_Page();
+
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Choose_History_Transaction_Type_Page();
 
     return;
   }
