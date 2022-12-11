@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -20,6 +19,9 @@ void Change_Outcome_Transaction_Page_1();
 void Change_Outcome_Transaction_Page_2(int id);
 void Choose_Type_Delete_Transaction_Page();
 void Save_DB();
+void Edit_Outcome_Transaction_Page();
+void Edit_Income_Transaction_Page();
+void Edit_Transaction_Menu_Page();
 
 //////////////////////////////////////////////
 
@@ -505,7 +507,7 @@ void Change_Outcome_Transaction_Page_1() {
   // Inputs
   getline(cin, input);
   if(input == "0") {
-    Choose_Type_Delete_Transaction_Page();
+    Edit_Outcome_Transaction_Page();
 
     return;
   }
@@ -797,7 +799,7 @@ void Change_Income_Transaction_Page_1() {
   // Inputs
   getline(cin, input);
   if(input == "0") {
-    Choose_Type_Change_Transaction_Page();
+    Edit_Income_Transaction_Page();
 
     return;
   }
@@ -825,7 +827,7 @@ void Change_Income_Transaction_Page_1() {
   }
 }
 
-void Choose_Type_Change_Transaction_Page() {
+void Edit_Outcome_Transaction_Page() {
   // Variables
   string input;
 
@@ -835,8 +837,8 @@ void Choose_Type_Change_Transaction_Page() {
   cout << "             Menu Ubah Catatan Keuangan" << endl;
   cout << "                    Pilih Tipe" << endl;
   cout << ui.border << endl;
-  cout << " [1] Pemasukan" << endl;
-  cout << " [2] Pengeluaran" << endl;
+  cout << " [1] Ubah Riwayat Pengeluaran" << endl;
+  cout << " [2] Hapus Riwayat Pengeluaran" << endl;
   cout << " [0] Kembali" << endl;
   cout << ui.border << endl;
   cout << "> Pilih Menu: ";
@@ -844,19 +846,57 @@ void Choose_Type_Change_Transaction_Page() {
   // Input
   getline(cin, input);
   if(input == "0") {
-    Main_Page();
+    Edit_Transaction_Menu_Page();
+
+    return;
+  } else if(input == "1") {
+    Change_Outcome_Transaction_Page_1();
+    return;
+  } else if (input == "2") {
+    Delete_Outcome_Transaction_Page();
+    return;
+  } else {
+    notificator("Menu tidak ditemukan", 38, 50);
+
+    Edit_Outcome_Transaction_Page();
+
+    return;
+  }
+  return;
+}
+
+void Edit_Income_Transaction_Page() {
+  // Variables
+  string input;
+
+  // Layouts
+  system("cls");
+  cout << ui.border << endl;
+  cout << "             Menu Ubah Catatan Keuangan" << endl;
+  cout << "                    Pilih Tipe" << endl;
+  cout << ui.border << endl;
+  cout << " [1] Ubah Riwayat Pengeluaran" << endl;
+  cout << " [2] Hapus Riwayat Pengeluaran" << endl;
+  cout << " [0] Kembali" << endl;
+  cout << ui.border << endl;
+  cout << "> Pilih Menu: ";
+
+  // Input
+  getline(cin, input);
+  if(input == "0") {
+    Edit_Transaction_Menu_Page();
 
     return;
   } else if(input == "1") {
     Change_Income_Transaction_Page_1();
     return;
   } else if (input == "2") {
-    Change_Outcome_Transaction_Page_1();
+    Delete_Income_Transaction_Page();
     return;
   } else {
     notificator("Menu tidak ditemukan", 38, 50);
 
-    Choose_Type_Change_Transaction_Page();
+    Edit_Income_Transaction_Page();
 
     return;
   }
@@ -871,8 +911,8 @@ void Edit_Transaction_Menu_Page() {
   cout << ui.border << endl;
   cout << "             Menu Ubah Catatan Keuangan" << endl;
   cout << ui.border << endl;
-  cout << " [1] Ubah" << endl;
-  cout << " [2] Hapus" << endl;
+  cout << " [1] Ubah Riwayat Pemasukan" << endl;
+  cout << " [2] Ubah Riwayat Pengeluaran" << endl;
   cout << " [0] Kembali" << endl;
   cout << ui.border << endl;
   cout << "> Pilih Menu: ";
@@ -884,10 +924,10 @@ void Edit_Transaction_Menu_Page() {
 
     return;
   } else if(input == "1") {
-    Choose_Type_Change_Transaction_Page();
+    Edit_Income_Transaction_Page();
     return;
   } else if(input == "2") {
-    Choose_Type_Delete_Transaction_Page();
+    Edit_Outcome_Transaction_Page();
     return;
   } else {
     notificator("Menu tidak ditemukan", 38, 50);
@@ -1504,7 +1544,7 @@ void Main_Page() {
 
     return;
   } else if(input == "5") {
-
+    system("cls");
     return;
   } else {
     notificator("Menu tidak ditemukan", 38, 50);
